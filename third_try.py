@@ -4,6 +4,9 @@ import re
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
+def tanh(x):
+    return np.tanh(x)
+
 def preprocess_text(text):
     # Извлечение чисел из текста
     numbers = re.findall(r'\d+', text)
@@ -46,12 +49,12 @@ training_inputs = np.array(training_inputs)
 # Ожидаемые выходы
 training_outputs = np.array([[1], [4], [1], [5], [2], [6], [3], [7], [2], [4], [5], [5], [0], [7], [3], [8], [2], [6]])  # Замените ... на ожидаемые выходы
 
-np.random.seed(1)
+np.random.seed(2)
 synaptic_weights = 2 * np.random.random((max_input_length, 1)) - 1
 
-for i in range(30000):
+for i in range(50000):
     input_layer = training_inputs
-    outputs = sigmoid(np.dot(input_layer, synaptic_weights))
+    outputs = tanh(np.dot(input_layer, synaptic_weights))
     err = training_outputs - outputs
     adjstmnts = np.dot(input_layer.T, err * (outputs * (1 - outputs)))
     synaptic_weights += adjstmnts
@@ -61,8 +64,8 @@ for i in range(30000):
 new_text = "В корзине было 1 груш, к ним положили еще 7"
 new_inputs = preprocess_text(new_text)
 new_inputs = new_inputs + [0] * (max_input_length - len(new_inputs))
-new_inputs = np.array(new_inputs)
-output = sigmoid(np.dot(new_inputs, synaptic_weights))
+new_inputs = np.array([new_inputs])  # Добавьте дополнительные квадратные скобки для создания двумерного массива
+output = tanh(np.dot(new_inputs, synaptic_weights))
 
 print("Ответ на задачку:")
 print(output)
