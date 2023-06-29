@@ -34,14 +34,23 @@ input_data = [
 # Преобразование текстовых данных в числовые входные данные
 training_inputs = [preprocess_text(text) for text in input_data]
 
+# Определение максимальной длины входных данных
+max_input_length = max(len(inputs) for inputs in training_inputs)
+
+# Заполнение недостающих элементов нулями
+training_inputs = [inputs + [0] * (max_input_length - len(inputs)) for inputs in training_inputs]
+
+# Преобразование входных данных в массив numpy
+training_inputs = np.array(training_inputs)
+
 # Ожидаемые выходы
 training_outputs = np.array([[1], [4], [1], [5], [2], [6], [3], [7], [2], [4], [5], [5], [0], [7], [3], [8], [2], [6]])  # Замените ... на ожидаемые выходы
 
 np.random.seed(1)
-synaptic_weights = 2 * np.random.random((len(training_inputs[0]), 1)) - 1
+synaptic_weights = 2 * np.random.random((max_input_length, 1)) - 1
 
 for i in range(30000):
-    input_layer = np.array(training_inputs)  # Преобразование текущего входа в массив numpy
+    input_layer = training_inputs
     outputs = sigmoid(np.dot(input_layer, synaptic_weights))
     err = training_outputs - outputs
     adjstmnts = np.dot(input_layer.T, err * (outputs * (1 - outputs)))
@@ -49,8 +58,10 @@ for i in range(30000):
 
 # TEST
 
-new_text = "В корзине было 5 груш, к ним положили еще 4"
-new_inputs = np.array([preprocess_text(new_text)])  # Преобразование нового входа в массив numpy
+new_text = "В корзине было 1 груш, к ним положили еще 7"
+new_inputs = preprocess_text(new_text)
+new_inputs = new_inputs + [0] * (max_input_length - len(new_inputs))
+new_inputs = np.array(new_inputs)
 output = sigmoid(np.dot(new_inputs, synaptic_weights))
 
 print("Ответ на задачку:")
