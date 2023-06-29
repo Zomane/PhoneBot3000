@@ -3,14 +3,18 @@ import numpy as np
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
-training_inputs = np. array([[0,0,0],
-                             [1,1,1],
-                             [1,1,0],
-                             [0,1,1]])
+training_inputs = np. array([[0,1,0,1,0],
+                             [1,1,0,0,1],
+                             [0,1,0,1,1],
+                             [1,1,0,1,1],
+                             [0,0,1,1,0],
+                             [1,0,1,0,1],
+                             [0,0,1,1,0],
+                             [1,1,1,1,1]])
 
-training_outputs = np.array([[0,1,1,0]]).T
+training_outputs = np.array([[0,1,0,1,0,1,0,1]]).T
 np.random.seed(1)
-synaptic_weights = 2 * np.random.random((3,1))-1
+synaptic_weights = 2 * np.random.random((5,1))-1
 
 for i in range(30000):
     input_layer = training_inputs
@@ -21,7 +25,7 @@ for i in range(30000):
 
 #TEST
 
-new_inputs = np.array([1,0,0])
+new_inputs = np.array([1,0,0,0,0])
 output = sigmoid(np.dot(new_inputs, synaptic_weights))
 
 print("Ответ на задачку:")
