@@ -18,7 +18,7 @@ class Search:
         """
 
         context_product, context_plant = [], []
-        for _, item in enumerate(massage.split(" ")):
+        for item in massage.split(" "):
             if self.product.__contains__(item):
                 context_product.append(item)
             elif self.plants.__contains__(item):
@@ -33,7 +33,7 @@ class Search:
         Возвращает set с массивом, в массиве строки
         """
         context_product = []
-        for _, item in enumerate(massage.split(" ")):
+        for item in massage.split(" "):
             if self.product.__contains__(item):
                 context_product.append(item)
         return set(context_product)
@@ -47,7 +47,7 @@ class Search:
         !!! ЭТО ГЕНИРАТОР !!!
         """
 
-        for _, item in enumerate(massage.split(" ")):
+        for item in massage.split(" "):
             if self.product.__contains__(item):
                 yield item
 
@@ -60,7 +60,7 @@ class Search:
         """
 
         context_plant = []
-        for _, item in enumerate(massage.split(" ")):
+        for item in massage.split(" "):
             if self.product.__contains__(item):
                 context_plant.append(item)
         return set(context_plant)
@@ -74,7 +74,7 @@ class Search:
         !!! ЭТО ГЕНИРАТОР !!!
         """
 
-        for _, item in enumerate(massage.split(" ")):
+        for item in massage.split(" "):
             if self.product.__contains__(item):
                 yield item
 
