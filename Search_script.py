@@ -1,6 +1,3 @@
-from tensorflow.core.function.trace_type import Serializable
-
-
 class Search:
     def __init__(self, product: list[str], plants: list[str]):
         """
