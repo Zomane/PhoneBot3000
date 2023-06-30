@@ -1,14 +1,14 @@
 import spacy
+from spacy.tokens import Doc, DocBin
 
-if __name__ == '__main__':
-   nlp = spacy.load('ru_core_news_lg')
-   import ru_core_news_lg
-   nlp = ru_core_news_lg.load()
-   spacy.explain("Degree")
-   doc = nlp("Здраствуйте, я хочу купить 'Парацетамол', Россия, Москва")
-   for word in doc:
-      print(word.text, word.tag_, spacy.explain(word.tag_))
-
+nlp = spacy.blank("ru")
+docbin = DocBin()
+words = ["Apple", "is", "looking", "at", "buying", "U.K.", "startup", "."]
+spaces = [True, True, True, True, True, True, True, False]
+ents = ["B-ORG", "O", "O", "O", "O", "B-GPE", "O", "O"]
+doc = Doc(nlp.vocab, words=words, spaces=spaces, ents=ents)
+docbin.add(doc)
+docbin.to_disk("./train.spacy")
 
 
 
